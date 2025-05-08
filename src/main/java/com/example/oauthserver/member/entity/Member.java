@@ -40,4 +40,11 @@ public class Member {
     @UpdateTimestamp    // 현재시간 디폴트값
     @Column(name="updateAt", updatable = false) // insert시 최초 시간만 넣고 시간 수정 안되게
     private LocalDateTime updateAt;
+
+    // oauth 부분 추가 부분
+    @Column(name = "provider")
+    private String provider;
+
+    @Transient
+    private String role;
 }

@@ -1,5 +1,6 @@
 package com.example.oauthserver.jwt.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,12 +25,22 @@ public class JwtTokenProvider {
 
     private String createToken(String username, long expireTime) {
         Date now = new Date();
+
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + expireTime))
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey().getBytes())
                 .compact();
+    }
+
+    public String getRole(String token) {
+
+        return Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey().getBytes()).build().parseClaimsJws(token).getBody().get("role", String.class);
+    }
+
+    public String getUsername(String token) {
+        return Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey().getBytes()).build().parseClaimsJws(token).getBody().get("username", String.class);
     }
 
     public String getUserId(String token) {

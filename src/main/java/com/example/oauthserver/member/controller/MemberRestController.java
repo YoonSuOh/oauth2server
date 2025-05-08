@@ -41,4 +41,7 @@ public class MemberRestController {
             return Response.success(memberLoginResponse);
         }
     }
+
+    /* 소셜 로그인된 사용자 정보 가져오기 */
+    /* 소셜 로그아웃 */
 }
